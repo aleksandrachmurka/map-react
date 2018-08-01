@@ -52,7 +52,7 @@ class FilterList extends Component {
 		return(
 			<div className="list-container">
 				<h1>Discover Cieplice</h1>
-				<input class="location-serach" type="text" placeholder="Search" onChange={(event)=> this.filter(event.target.value)}/>
+				<input className="location-serach" type="text" placeholder="Search" onChange={(event)=> this.filter(event.target.value)}/>
 				<ul className = "locations-list">
 					{ this.state.locations.map(location => (<li onClick={(event) => this.handleLocationClick(event.target.value)}> {location.title} </li>)) }
 				</ul>
