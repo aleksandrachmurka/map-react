@@ -1,18 +1,37 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
+.app {
   font-size: 1.5em;
+  display: flex;
+  flex: wrap;
 }
 
-.App-intro {
-  font-size: large;
+.map-container {
+  margin: 0 auto;
+  width: 70%;
+  min-height: 100vh;
 }
+
+#map {
+  height: 100%;
+}
+
+.list-container {
+  margin: 0 auto;
+  width: 30%;
+  height: 100vh;
+  border-right: grey solid;
+}
+
+.location-serach {
+
+}
+
+.locations-list {
+  list-style-type: none;
+}
+
+
+
