@@ -6,43 +6,58 @@ class FilterList extends Component {
 		super(props);
 		this.state = {
 			query: '',
-			locations: [],
-			markers: []
+			locations: this.props.locations,
+			markers: this.props.markers
+		};
+	}
+
+	// componentDidMount(){
+	// 	this.setState({locations: this.props.locations, markers: this.props.markers});
+	// 	console.log(this.state.markers)
+	// }
+
+	filter(query){
+		console.log(this.state.markers)
+		this.setState({query: query});
+		console.log(query);
+		if (query) {
+				let filteredLocations = [];
+				let filteredMarkers = [];
+				const match = new RegExp(ecsapeRegExp(query), 'i');
+
+				filteredLocations = this.state.locations.filter((location) => match.test(location.title));
+				// filteredLocations.forEach((location) = >) zmalźć li z innertextem i dodać klasę underline
+
+				filteredMarkers = this.state.markers.filter((marker) => match.test(marker.title));
+				this.state.markers.forEach((marker) => marker.setVisible(false));
+				filteredMarkers.forEach((marker) => {
+					marker.setVisible(true);
+					marker.setAnimation(this.props.maps.Animation.BOUNCE)
+				});
+
+				this.setState({locations: filteredLocations, markers: filteredMarkers});
+		} else {
+			console.log(this.props.markers)
+			this.setState({locations: this.props.locations, markers: this.props.markers});
+			this.state.markers.forEach((marker) => {
+				marker.setVisible(true);
+				marker.setAnimation(null);
+			});
 		}
 	}
 
-	componentDidMount(){
+	resetQuery() {
+		this.setState({query: ''});
 		this.setState({locations: this.props.locations, markers: this.props.markers});
 	}
 
-	filter(query){
-		if (query) {
-			// this.setState({query: ''});
-			let filteredLocations = [];
-			let filteredMarkers = [];
-			const match = new RegExp(ecsapeRegExp(query), 'i')
-			this.setState({query: query})
-			filteredLocations = this.state.locations.filter((location) => match.test(location.title));
-			filteredMarkers = this.state.markers.filter((marker) => match.test(marker.title));
-
-			this.state.markers.forEach((marker) => marker.setVisible(false));
-			filteredMarkers.forEach((marker) => {
-				marker.setVisible(true);
-				marker.setAnimation(this.props.maps.Animation.BOUNCE)
-			});
-
-			this.setState({locations: filteredLocations, markers: filteredMarkers});
-
-		} else {
-			this.setState({locations: this.props.locations, markers: this.props.markers});
-		}
-	}
 
 	handleLocationClick(location) {
-		let marker =
 		this.setState({locations: location});
-		// kliknięcie na lokalizację wyświetla marker i infowindow, plus animacja reszta niewidoczna
+		// kliknięcie na lokalizację wymusi akcję klik na markerze (trigger click), plus animacja reszta niewidoczna, do tego ref prop
 	}
+
+
 
 
 
@@ -52,7 +67,8 @@ class FilterList extends Component {
 		return(
 			<div className="list-container">
 				<h1>Discover Cieplice</h1>
-				<input className="location-serach" type="text" placeholder="Search" onChange={(event)=> this.filter(event.target.value)}/>
+				<input className="location-serach" type="text" value={this.state.query} placeholder="Search" onChange={(event)=> this.filter(event.target.value)}/>
+				<button onClick={this.resetQuery}>X </button>
 				<ul className = "locations-list">
 					{ this.state.locations.map(location => (<li onClick={(event) => this.handleLocationClick(event.target.value)}> {location.title} </li>)) }
 				</ul>
