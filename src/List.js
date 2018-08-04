@@ -6,27 +6,36 @@ class FilterList extends Component {
 		super(props);
 		this.state = {
 			query: '',
-			locations: this.props.locations,
-			markers: this.props.markers
+			locations: [],
+			markers: []
 		};
 	}
 
-	// componentDidMount(){
-	// 	this.setState({locations: this.props.locations, markers: this.props.markers});
-	// 	console.log(this.state.markers)
-	// }
+	componentDidMount() {
+		this.setState({locations: this.props.locations, markers: this.props.markers });
+	}
 
-	filter(query){
-		console.log(this.state.markers)
+
+	filter = (query) => {
+
 		this.setState({query: query});
-		console.log(query);
-		if (query) {
+		console.log(query.length)
+
+			if (query.length == 0) {
+				this.setState({locations: this.props.locations, markers: this.props.markers });
+
+				this.state.markers.forEach((marker) => {
+					marker.setVisible(true);
+					marker.setAnimation(null);
+				});
+
+			} else {
 				let filteredLocations = [];
 				let filteredMarkers = [];
 				const match = new RegExp(ecsapeRegExp(query), 'i');
 
 				filteredLocations = this.state.locations.filter((location) => match.test(location.title));
-				// filteredLocations.forEach((location) = >) zmalźć li z innertextem i dodać klasę underline
+
 
 				filteredMarkers = this.state.markers.filter((marker) => match.test(marker.title));
 				this.state.markers.forEach((marker) => marker.setVisible(false));
@@ -36,30 +45,20 @@ class FilterList extends Component {
 				});
 
 				this.setState({locations: filteredLocations, markers: filteredMarkers});
-		} else {
-			console.log(this.props.markers)
-			this.setState({locations: this.props.locations, markers: this.props.markers});
-			this.state.markers.forEach((marker) => {
-				marker.setVisible(true);
-				marker.setAnimation(null);
-			});
-		}
+			}
+
 	}
 
-	resetQuery() {
-		this.setState({query: ''});
-		this.setState({locations: this.props.locations, markers: this.props.markers});
+	resetQuery = () => {
+		this.setState({query: '', locations: this.props.locations, markers: this.props.markers });
 	}
 
 
-	handleLocationClick(location) {
-		this.setState({locations: location});
-		// kliknięcie na lokalizację wymusi akcję klik na markerze (trigger click), plus animacja reszta niewidoczna, do tego ref prop
-	}
+	// handleLocationClick(location) {
+	// 	this.setState({locations: location});
 
-
-
-
+	// 	// kliknięcie na lokalizację wymusi akcję klik na markerze (trigger click), plus animacja reszta niewidoczna, do tego ref prop
+	// }
 
 
 	render() {
