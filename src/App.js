@@ -23,13 +23,14 @@ class App extends Component {
       };
   }
 
+//initialize map after App mounts
   componentDidMount() {
     this.initMap();
   }
 
   initMap() {
     let self = this;
-
+//create new Google Map
     let map = new this.props.google.maps.Map(document.getElementById('map'), {
       zoom: 15,
       center: {lat: 50.863789, lng: 15.6788113}
@@ -38,7 +39,7 @@ class App extends Component {
     map.addListener('click', function() {
       self.closeInfoWindow();
     });
-
+//create markers based on locations defined in state
     this.state.locations.forEach((location) => {
       let marker = new this.props.google.maps.Marker({
         position: {lat: location.lat, lng: location.lng},
@@ -59,6 +60,7 @@ class App extends Component {
 
   }
 
+//display infoWindow - trigerred by clicking on marker and location from list
   displayInfoWindow = (map, marker) => {
     // this.setState({activeMarker: marker});
     this.state.infoWindow.setContent(`<h3>${marker.title}</h3>`)
@@ -66,11 +68,12 @@ class App extends Component {
     this.getWikipediaInfo(marker)
   }
 
+//close info window - triggered by cliking on map
   closeInfoWindow() {
     this.state.infoWindow.close()
   }
 
-
+//fetch data from Wikipedia to populate info window
  getWikipediaInfo(marker) {
     let self = this;
     let pageId = marker.pageId;
