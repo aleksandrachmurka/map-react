@@ -12,10 +12,16 @@
   margin: 0 auto;
   min-width: 70%;
   min-height: 100vh;
+  position: relative;
 }
 
 #map {
   height: 100%;
+}
+
+.toggle-button {
+	position: absolute;
+	z-index: 100;
 }
 
 .list-container {
@@ -41,4 +47,6 @@ h1 {
 .underline {
   text-decoration: underline;
 }
+
+@media
 

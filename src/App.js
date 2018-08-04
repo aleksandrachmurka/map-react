@@ -19,7 +19,8 @@ class App extends Component {
         ],
         markers: [],
         // activeMarker: {},
-        infoWindow: new this.props.google.maps.InfoWindow
+        infoWindow: new this.props.google.maps.InfoWindow,
+        showList: false
       };
   }
 
@@ -93,14 +94,17 @@ class App extends Component {
 
   }
 
-
+  toggleListView = () => {
+	this.state.showList ? this.setState({showList: false}) : this.setState({showList: true});
+  }
 
 
   render() {
     return (
       <div className="app">
-              <FilterList locations={this.state.locations} markers={this.state.markers} maps={this.props.google.maps}/>
+              {this.state.showList ? <FilterList locations={this.state.locations} markers={this.state.markers} maps={this.props.google.maps}/> : null}
           <div className="map-container">
+          	<button className="toggle-button" onClick={this.toggleListView}> Hide/Show Locations List </button>
             <div id='map' role='application'></div>
           </div>
       </div>
