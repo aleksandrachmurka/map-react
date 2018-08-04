@@ -49,9 +49,6 @@ h1 {
   list-style-type: none;
 }
 
-.underline {
-  text-decoration: underline;
-}
 
 @media only screen and (max-width: 800px) {
 	h1 {
@@ -96,20 +93,4 @@ h1 {
 	}
 }
 
-/*@media only screen and (max-width: 300px) {
-	.map-container {
-		max-width: 60%;
-	}
-	h1 {
-		font-size: 1em;
-	}
-
-	li {
-		font-size: 0.75em;
-	}
-
-	.location-serach{
-		width: 70%;
-	}
-}*/
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import {GoogleApiWrapper} from 'google-maps-react';
 import FilterList from './List';
-import Map from './Map';
 
 class App extends Component {
   constructor(props) {
@@ -18,8 +17,8 @@ class App extends Component {
           {key: 7, title: 'Catholic Church', lat: 50.865278, lng: 15.678611, pageId: '2553205'}
         ],
         markers: [],
-        // activeMarker: {},
         infoWindow: new this.props.google.maps.InfoWindow,
+        //aria label - info window
         showList: false
       };
   }
@@ -62,11 +61,10 @@ class App extends Component {
   }
 
 //display infoWindow - trigerred by clicking on marker and location from list
-  displayInfoWindow = (map, marker) => {
-    // this.setState({activeMarker: marker});
-    this.state.infoWindow.setContent(`<h3>${marker.title}</h3>`)
-    this.state.infoWindow.open(map, marker)
-    this.getWikipediaInfo(marker)
+	displayInfoWindow = (map, marker) => {
+	    this.state.infoWindow.setContent(`<h3>${marker.title}</h3>`)
+	    this.state.infoWindow.open(map, marker)
+	    this.getWikipediaInfo(marker)
   }
 
 //close info window - triggered by cliking on map
@@ -105,7 +103,7 @@ class App extends Component {
               {this.state.showList ? <FilterList locations={this.state.locations} markers={this.state.markers} maps={this.props.google.maps}/> : null}
           <div className="map-container">
           	<button className="toggle-button" onClick={this.toggleListView}> Hide/Show Locations List </button>
-            <div id='map' role='application'></div>
+            <div id='map' role='application' tabIndex='0'></div>
           </div>
       </div>
     );
