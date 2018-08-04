@@ -24,7 +24,7 @@ class FilterList extends Component {
 		this.setState({query: query});
 
 		//if search input is cleared
-			if (query.length == 0) {
+			if (query.length === 0) {
 				this.resetQuery();
 
 			} else {
@@ -62,10 +62,15 @@ class FilterList extends Component {
 
 
 	handleLocationClick = (location) => {
-		let activeMarker = this.state.markers.filter((marker)=>  marker.key === location.key);
-		// displayInfoWindow(activeMarker);
+		let locationKey = location.getAttribute('id');
+		let activeMarker = this.state.markers.filter((marker)=>  marker.key == locationKey);
 
-		// kliknięcie na lokalizację wymusi akcję klik na markerze (trigger click), plus animacja reszta niewidoczna, do tego ref prop
+		// let animateMarker=setTimeout((activeMarker[0]) => {setAnimation(this.props.maps.Animation.BOUNCE)}, 2000);
+		// animateMarker();
+
+		this.props.displayInfoWindow(this.props.map, activeMarker);
+
+
 	}
 
 
@@ -77,7 +82,7 @@ class FilterList extends Component {
 				<input className="location-serach" type="text" value={this.state.query} placeholder="Search location" onChange={(event)=> this.filter(event.target.value)}/>
 				<button onClick={this.resetQuery}>X </button>
 				<ul className = "locations-list" aria-label="List of locations">
-					{this.state.filteredLocations.length == 0 ? this.state.locations.map(location => (<li key={location.key} onClick={(event) => this.handleLocationClick(event.target.value)}> {location.title} </li>)) : this.state.filteredLocations.map(location => (<li key={location.key} onClick={(event) => this.handleLocationClick(event.target.value)}> {location.title} </li>))
+					{this.state.filteredLocations.length === 0 ? this.state.locations.map(location => (<li id={location.key} onClick={(event) => this.handleLocationClick(event.target)}> {location.title} </li>)) : this.state.filteredLocations.map(location => (<li key={location.key} onClick={(event) => this.handleLocationClick(event.target)}> {location.title} </li>))
 					}
 				</ul>
 			</div>

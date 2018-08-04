@@ -17,9 +17,10 @@ class App extends Component {
           {key: 7, title: 'Catholic Church', lat: 50.865278, lng: 15.678611, pageId: '2553205'}
         ],
         markers: [],
-        infoWindow: new this.props.google.maps.InfoWindow,
+        infoWindow: new this.props.google.maps.InfoWindow(),
         //aria label - info window
-        showList: false
+        showList: false,
+        map: {}
       };
   }
 
@@ -39,6 +40,8 @@ class App extends Component {
     map.addListener('click', function() {
       self.closeInfoWindow();
     });
+
+    this.state.map = Object.assign({map});
 //create markers based on locations defined in state
     this.state.locations.forEach((location) => {
       let marker = new this.props.google.maps.Marker({
@@ -57,7 +60,6 @@ class App extends Component {
         self.displayInfoWindow(map, marker);
       });
     });
-
   }
 
 //display infoWindow - trigerred by clicking on marker and location from list
@@ -100,7 +102,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-              {this.state.showList ? <FilterList locations={this.state.locations} markers={this.state.markers} maps={this.props.google.maps}/> : null}
+              {this.state.showList ? <FilterList locations={this.state.locations} markers={this.state.markers} map={this.state.map} maps={this.props.google.maps} displayInfoWindow={this.displayInfoWindow} /> : null}
           <div className="map-container">
           	<button className="toggle-button" onClick={this.toggleListView}> Hide/Show Locations List </button>
             <div id='map' role='application' tabIndex='0'></div>
