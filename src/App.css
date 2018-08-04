@@ -10,7 +10,7 @@
 
 .map-container {
   margin: 0 auto;
-  width: 70%;
+  min-width: 70%;
   min-height: 100vh;
 }
 
@@ -20,12 +20,17 @@
 
 .list-container {
   margin: 0 auto;
-  width: 30%;
+  min-width: 30%;
   height: 100vh;
   border-right: grey solid;
 }
 
+h1 {
+	margin-left: 30px;
+}
+
 .location-serach {
+	margin-left: 30px;
 
 }
 

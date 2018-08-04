@@ -11,19 +11,21 @@ class FilterList extends Component {
 		};
 	}
 
+//initialize state from received props
 	componentDidMount() {
 		this.setState({locations: this.props.locations, markers: this.props.markers });
 	}
 
 
 	filter = (query) => {
-
+		//update query
 		this.setState({query: query});
-		console.log(query.length)
 
+		//if search input is cleared
 			if (query.length == 0) {
+				//reset state to default - should 'contain' all locations and markers
 				this.setState({locations: this.props.locations, markers: this.props.markers });
-
+				//show all markers again and stop animation
 				this.state.markers.forEach((marker) => {
 					marker.setVisible(true);
 					marker.setAnimation(null);
@@ -32,28 +34,32 @@ class FilterList extends Component {
 			} else {
 				let filteredLocations = [];
 				let filteredMarkers = [];
+
 				const match = new RegExp(ecsapeRegExp(query), 'i');
 
+				//filter locations and add them to an array
 				filteredLocations = this.state.locations.filter((location) => match.test(location.title));
+				//place to add some animation on filtered li elements
 
-
+				//filter markers and add them to an array
 				filteredMarkers = this.state.markers.filter((marker) => match.test(marker.title));
+				//hide all markers and show only filtered ones, apply animation
 				this.state.markers.forEach((marker) => marker.setVisible(false));
 				filteredMarkers.forEach((marker) => {
 					marker.setVisible(true);
 					marker.setAnimation(this.props.maps.Animation.BOUNCE)
 				});
-
+				//update state to show only filtered locations and markers
 				this.setState({locations: filteredLocations, markers: filteredMarkers});
 			}
 
 	}
-
+	// reset to show all locations and markers
 	resetQuery = () => {
 		this.setState({query: '', locations: this.props.locations, markers: this.props.markers });
 	}
 
-
+	// to be added
 	// handleLocationClick(location) {
 	// 	this.setState({locations: location});
 
