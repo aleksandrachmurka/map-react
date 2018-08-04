@@ -78,7 +78,7 @@ class App extends Component {
  getWikipediaInfo(marker) {
     let self = this;
     let pageId = marker.pageId;
-    let url = 'https://cors-anywhere.herokuapp.com/https://pl.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&pageids=' + pageId;
+    let url = 'https://cors-anywhere.herokuapp.com/https://pl.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&pageids=' + pageId;
     // ew. explaintext=&
     fetch(url)
     .then(function(response){
