@@ -13,7 +13,7 @@ class FilterList extends Component {
 		};
 	}
 
-//initialize state from received props
+//update state from received props
 	componentDidMount() {
 		this.setState({locations: this.props.locations, markers: this.props.markers });
 	}
@@ -23,7 +23,7 @@ class FilterList extends Component {
 		//update query
 		this.setState({query: query});
 
-		//if search input is cleared
+		//if search input is clear
 			if (query.length === 0) {
 				this.resetQuery();
 
@@ -32,25 +32,24 @@ class FilterList extends Component {
 				let filteredMarkers = [];
 
 				const match = new RegExp(ecsapeRegExp(query), 'i');
+
 				//filter locations, add them to the array and update state
 				filteredLocations = this.state.locations.filter((location) => match.test(location.title));
 				this.setState({locations: filteredLocations});
-				console.log(filteredLocations)
+
 				//filter markers and add them to an array
 				filteredMarkers = this.state.markers.filter((marker) => match.test(marker.title));
+
 				//hide all markers and show only filtered ones, apply animation
 				this.state.markers.forEach((marker) => marker.setVisible(false));
 				filteredMarkers.forEach((marker) => {
 					marker.setVisible(true);
-					marker.setAnimation(this.props.maps.Animation.BOUNCE)
+					marker.setAnimation(this.props.maps.Animation.BOUNCE);
 				});
-
-
 			}
-
-		console.log(this.state.locations)
 	}
-	// reset to show all locations and markers, stop animation
+
+	// reset query to show all locations and markers, stop animation
 	resetQuery = () => {
 		this.setState({query: '', locations: this.props.locations, markers: this.props.markers });
 		this.state.markers.forEach((marker) => {
@@ -60,7 +59,7 @@ class FilterList extends Component {
 
 	}
 
-
+	// when location is clicked, add animation to corresponding marker and open info window
 	handleLocationClick = (location) => {
 		let locationKey = location.getAttribute('id');
 		let activeMarker = this.state.markers.filter((marker)=>  marker.key == locationKey);
@@ -69,20 +68,17 @@ class FilterList extends Component {
 		setTimeout(activeMarker[0].setAnimation(null), 10000);
 
 		this.props.displayInfoWindow(this.props.map, activeMarker[0]);
-
 	}
 
 
 	render() {
-
 		return(
 			<div className="list-container">
 				<h1>Discover Cieplice</h1>
 				<input className="location-serach" type="text" value={this.state.query} placeholder="Search location" onChange={(event)=> this.filter(event.target.value)}/>
 				<button onClick={this.resetQuery}>X </button>
 				<ul className = "locations-list" aria-label="List of locations">
-					{this.state.filteredLocations.length === 0 ? this.state.locations.map(location => (<li id={location.key} onClick={(event) => this.handleLocationClick(event.target)}> {location.title} </li>)) : this.state.filteredLocations.map(location => (<li key={location.key} onClick={(event) => this.handleLocationClick(event.target)}> {location.title} </li>))
-					}
+					{this.state.filteredLocations.length === 0 ? this.state.locations.map(location => (<li id={location.key} onClick={(event) => this.handleLocationClick(event.target)}> {location.title} </li>)) : this.state.filteredLocations.map(location => (<li key={location.key} onClick={(event) => this.handleLocationClick(event.target)}> {location.title} </li>))}
 				</ul>
 			</div>
 		);
