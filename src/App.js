@@ -98,10 +98,10 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-              {this.state.showList ? <FilterList locations={this.state.locations} markers={this.state.markers} map={this.state.map} maps={this.props.google.maps} displayInfoWindow={this.displayInfoWindow.bind(this)} /> : null}
+              {this.state.showList ? <FilterList tabIndex="0" locations={this.state.locations} markers={this.state.markers} map={this.state.map} maps={this.props.google.maps} displayInfoWindow={this.displayInfoWindow.bind(this)} /> : null}
           <div className="map-container">
           	<button className="toggle-button" onClick={this.toggleListView}> Hide/Show Locations List </button>
-            <div id='map' role='application' tabIndex='0'></div>
+            <div id="map" role="application" tabIndex="0"></div>
           </div>
       </div>
     );
