@@ -65,11 +65,10 @@ class FilterList extends Component {
 		let locationKey = location.getAttribute('id');
 		let activeMarker = this.state.markers.filter((marker)=>  marker.key == locationKey);
 
-		// let animateMarker=setTimeout((activeMarker[0]) => {setAnimation(this.props.maps.Animation.BOUNCE)}, 2000);
-		// animateMarker();
+		activeMarker[0].setAnimation(this.props.maps.Animation.BOUNCE)
+		setTimeout(activeMarker[0].setAnimation(null), 10000);
 
-		this.props.displayInfoWindow(this.props.map, activeMarker);
-
+		this.props.displayInfoWindow(this.props.map, activeMarker[0]);
 
 	}
 

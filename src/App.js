@@ -64,10 +64,14 @@ class App extends Component {
 
 //display infoWindow - trigerred by clicking on marker and location from list
 	displayInfoWindow = (map, marker) => {
+		console.log('running');
+		console.log(this.state.InfoWindow)
 	    this.state.infoWindow.setContent(`<h3>${marker.title}</h3>`)
+	    console.log(this.state.InfoWindow)
 	    this.state.infoWindow.open(map, marker)
 	    this.getWikipediaInfo(marker)
   }
+
 
 //close info window - triggered by cliking on map
   closeInfoWindow() {
@@ -102,7 +106,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-              {this.state.showList ? <FilterList locations={this.state.locations} markers={this.state.markers} map={this.state.map} maps={this.props.google.maps} displayInfoWindow={this.displayInfoWindow} /> : null}
+              {this.state.showList ? <FilterList locations={this.state.locations} markers={this.state.markers} map={this.state.map} maps={this.props.google.maps} displayInfoWindow={this.displayInfoWindow.bind(this)} /> : null}
           <div className="map-container">
           	<button className="toggle-button" onClick={this.toggleListView}> Hide/Show Locations List </button>
             <div id='map' role='application' tabIndex='0'></div>
