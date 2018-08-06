@@ -15,8 +15,10 @@ started as a Front End Web Developer Udacity Project, to be continued :)
 
 * clone or download this repo
 * navigate to app folder
-* install all dependencies with npm install
-* run with npm start
+* install all dependencies with 'npm install'
+* run with 'npm start'
+* service worker works only in production version, 
+in order to use it you first need command 'npm build'
 
 ##Dependencies
 
