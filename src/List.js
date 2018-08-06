@@ -78,7 +78,7 @@ class FilterList extends Component {
 				<input className="location-serach" type="text" placeholder="Search location" tabIndex="0" aria-labelledby="search location" value={this.state.query} onChange={(event)=> this.filter(event.target.value)}/>
 				<button onClick={this.resetQuery}>X </button>
 				<ul className = "locations-list" aria-label="List of locations">
-					{this.state.filteredLocations.length === 0 ? this.state.locations.map(location => (<li id={location.key} tabIndex="0" role="button" onClick={(event) => this.handleLocationClick(event.target)}> {location.title} </li>)) : this.state.filteredLocations.map(location => (<li key={location.key} tabIndex="0" role="button" onClick={(event) => this.handleLocationClick(event.target)} > {location.title} </li>))}
+					{this.state.filteredLocations.length === 0 ? this.state.locations.map(location => (<li id={location.key} key={location.key} tabIndex="0" role="button" onClick={(event) => this.handleLocationClick(event.target)}> {location.title} </li>)) : this.state.filteredLocations.map(location => (<li id={location.key} key={location.key} tabIndex="0" role="button" onClick={(event) => this.handleLocationClick(event.target)} > {location.title} </li>))}
 				</ul>
 			</div>
 		);
