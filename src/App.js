@@ -25,6 +25,10 @@ class App extends Component {
 
 //initialize map after App mounts
   componentDidMount() {
+  	//in case of Goole Maps Error
+  	window.gm_authFailure = function() {
+    	alert("Sorry! Google Map did not load properly!");
+	}
     this.initMap();
   }
 
@@ -39,8 +43,6 @@ class App extends Component {
     map.addListener('click', function() {
     	self.closeInfoWindow();
     });
-    // inform user when map cannot be loaded
-    map.onerror = (error) => alert('Problem loading Google Maps ' + error);
     //update map state (why setState was too late here?)
     this.state.map = Object.assign({map});
 	//create markers based on locations defined in state
@@ -96,6 +98,8 @@ class App extends Component {
   toggleListView = () => {
 	this.state.showList ? this.setState({showList: false}) : this.setState({showList: true});
   }
+
+
 
   render() {
     return (
