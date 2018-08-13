@@ -2,7 +2,7 @@
 
 started as a Front End Web Developer Udacity Project, to be continued :)
 
-##App
+## App
 
 * shows a few places of interest in Cieplice-Śląskie Zdrój, Poland
 * by clicking on the map marker you can read more about a place thanks (Courtesy of Wikipedia - unfortunately content is available only in Polish at the moment)
@@ -11,7 +11,7 @@ started as a Front End Web Developer Udacity Project, to be continued :)
 * clicking on the list item will show the location and info window
 
 
-##How to start
+## How to start
 
 * clone or download this repo
 * navigate to app folder
@@ -20,7 +20,7 @@ started as a Front End Web Developer Udacity Project, to be continued :)
 * service worker works only in production version, 
 in order to use it you first need command 'npm build'
 
-##Dependencies
+## Dependencies
 
 * React - bootstrapped with Create React App
 * Google Maps React
