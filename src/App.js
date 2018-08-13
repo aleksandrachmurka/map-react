@@ -25,78 +25,78 @@ class App extends Component {
 
 //initialize map after App mounts
   componentDidMount() {
-  	//in case of Goole Maps Error
-  	window.gm_authFailure = function() {
-    	alert("Sorry! Google Map did not load properly!");
-	}
+    //in case of Goole Maps Error
+    window.gm_authFailure = function() {
+      alert("Sorry! Google Map did not load properly!");
+  }
     this.initMap();
   }
 
   initMap() {
     let self = this;
-	//create new Google Map
+  //create new Google Map
     let map = new this.props.google.maps.Map(document.getElementById('map'), {
-    	zoom: 15,
-    	center: {lat: 50.863789, lng: 15.6788113}
+      zoom: 15,
+      center: {lat: 50.863789, lng: 15.6788113}
     });
     //click on map closes info window
     map.addListener('click', function() {
-    	self.closeInfoWindow();
+      self.closeInfoWindow();
     });
     //update map state (why setState was too late here?)
     this.state.map = Object.assign({map});
-	//create markers based on locations defined in state
+  //create markers based on locations defined in state
     this.state.locations.forEach((location) => {
-    	let marker = new this.props.google.maps.Marker({
-        	position: {lat: location.lat, lng: location.lng},
-        	title: location.title,
-        	key: location.key,
-        	map: map,
-        	animation: this.props.google.maps.Animation.DROP,
-        	pageId: location.pageId
-      	});
-    	//update markers in state
-    	this.state.markers.push(marker);
-    	// open infowindow when marker is clicked
-    	marker.addListener('click', function() {
-        	self.displayInfoWindow(map, marker);
-      	});
+      let marker = new this.props.google.maps.Marker({
+          position: {lat: location.lat, lng: location.lng},
+          title: location.title,
+          key: location.key,
+          map: map,
+          animation: this.props.google.maps.Animation.DROP,
+          pageId: location.pageId
+        });
+      //update markers in state
+      this.state.markers.push(marker);
+      // open infowindow when marker is clicked
+      marker.addListener('click', function() {
+          self.displayInfoWindow(map, marker);
+        });
     });
   }
 
 //display infoWindow - func. trigerred by clicking on marker and location from list
-	displayInfoWindow = (map, marker) => {
-	    this.state.infoWindow.setContent(`<h3>${marker.title}</h3>`)
-	    this.state.infoWindow.open(map, marker)
-	    this.getWikipediaInfo(marker);
-	}
+  displayInfoWindow = (map, marker) => {
+      this.state.infoWindow.setContent(`<h3>${marker.title}</h3>`)
+      this.state.infoWindow.open(map, marker)
+      this.getWikipediaInfo(marker);
+  }
 
 //close info window - triggered by cliking on a map
-	closeInfoWindow() {
-		this.state.infoWindow.close()
-	}
+  closeInfoWindow() {
+    this.state.infoWindow.close()
+  }
 
 //fetch data from Wikipedia to populate info window
-	getWikipediaInfo(marker) {
-    	let self = this;
-    	let pageId = marker.pageId;
-    	let url = 'https://cors-anywhere.herokuapp.com/https://pl.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&pageids=' + pageId;
-    	// ew. explaintext=&
-    	fetch(url)
-    	.then(function(response){
-      		return response.json();
-    	}).then(function(data){
-      		let title = data.query.pages[pageId].title;
-      		let content = data.query.pages[pageId].extract;
-      		self.state.infoWindow.setContent(`<p>From Wikipedia</p><h3>${title}</h3><p>${content}<p>`);
-    	}).catch(function(error){
-      		alert('Failed to load Wikipedia resources ' + error);
-    	})
+  getWikipediaInfo(marker) {
+      let self = this;
+      let pageId = marker.pageId;
+      let url = 'https://cors-anywhere.herokuapp.com/https://pl.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&pageids=' + pageId;
+      // ew. explaintext=&
+      fetch(url)
+      .then(function(response){
+          return response.json();
+      }).then(function(data){
+          let title = data.query.pages[pageId].title;
+          let content = data.query.pages[pageId].extract;
+          self.state.infoWindow.setContent(`<p>From Wikipedia</p><h3>${title}</h3><p>${content}<p>`);
+      }).catch(function(error){
+          alert('Failed to load Wikipedia resources ' + error);
+      })
   }
 
   //click on button shows or hides list
   toggleListView = () => {
-	this.state.showList ? this.setState({showList: false}) : this.setState({showList: true});
+  this.state.showList ? this.setState({showList: false}) : this.setState({showList: true});
   }
 
 
@@ -106,7 +106,7 @@ class App extends Component {
       <div className="app">
               {this.state.showList ? <FilterList tabIndex="0" locations={this.state.locations} markers={this.state.markers} map={this.state.map} maps={this.props.google.maps} displayInfoWindow={this.displayInfoWindow.bind(this)} /> : null}
           <div className="map-container">
-          	<button className="toggle-button" onClick={this.toggleListView}> Hide/Show Locations List </button>
+            <button className="toggle-button" onClick={this.toggleListView}> Hide/Show Locations List </button>
             <div id="map" role="application" tabIndex="0"></div>
           </div>
       </div>
