@@ -15,6 +15,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "merge": "^1.2.1"
+    "merge": "^1.2.1",
+    "url-parse": "^1.4.4"
   }
 }
